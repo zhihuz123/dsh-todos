@@ -4,10 +4,14 @@
 
 把「这次怎么做」留在会话里，把「接下来做什么」留在工作区。
 
+[English](README.en.md) | 中文
+
 `dsh-todos` 解决的是跨会话的待办问题：Agent 在会话里发现的后续工作、你明确承诺的下一步、暂时不做的想法，都可以落到 workspace 的 Plan / Backlog 里，第二天、下一个会话、甚至重启 Host 之后仍然在。
 
 > 早期版本，仓库暂时 private，尚未发布 npm。  
 > 仓库名是 `dsh-todos`，安装用的包名是 `dsh-plugin-todos`（npm 上的 `dsh-todos` 已被占用）。
+
+![dsh-todos 界面预览（示例数据）](docs/preview.zh.svg)
 
 ---
 
@@ -266,12 +270,6 @@ test/
   derive.test.mjs
   render.test.mjs
 ```
-
-## English
-
-Durable, workspace-level **Plan / Backlog** todos for DeepSeek Harness.
-
-Session `todo_write` is the checklist for the current turn; `dsh-todos` keeps work that outlives the turn and the session. Add todos from the Overview UI, the `/todo` command, or the `todo_add` / `todo_update` Agent tools. Plan is for explicitly committed next steps; Backlog is for concrete follow-ups that are worth keeping but not committed. Completed items can be restored or permanently cleared per workspace.
 
 ## License
 

@@ -39,6 +39,8 @@
     "cordis.patch.yml",
     "locale/*.json",
     "README.md",
+    "README.en.md",
+    "docs/preview*.svg",
     "LICENSE"
   ],
   "dsh": {
@@ -61,6 +63,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test test/*.test.mjs",
+    "preview": "node scripts/make-preview.mjs",
     "check": "npm run build && npm test"
   },
   "devDependencies": {
