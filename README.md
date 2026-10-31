@@ -6,10 +6,18 @@
 
 [English](README.en.md) | 中文
 
+[![CI](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
+
+
 `dsh-todos` 解决的是跨会话的待办问题：Agent 在会话里发现的后续工作、你明确承诺的下一步、暂时不做的想法，都可以落到 workspace 的 Plan / Backlog 里，第二天、下一个会话、甚至重启 Host 之后仍然在。
 
 > 早期版本，仓库暂时 private，尚未发布 npm。  
 > 仓库名是 `dsh-todos`，安装用的包名是 `dsh-plugin-todos`（npm 上的 `dsh-todos` 已被占用）。
+
+<!-- npm badges: enable after the package is published to npm.
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+-->
 
 ![dsh-todos 界面预览（示例数据）](docs/preview.zh.svg)
 
