@@ -6,7 +6,7 @@
 
 [English](README.en.md) | 中文
 
-[![CI](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 
 
 `dsh-todos` 解决的是跨会话的待办问题：Agent 在会话里发现的后续工作、你明确承诺的下一步、暂时不做的想法，都可以落到 workspace 的 Plan / Backlog 里，第二天、下一个会话、甚至重启 Host 之后仍然在。

@@ -11,7 +11,7 @@ Keep *how this turn is executed* in the session. Keep *what to do next* in the w
 
 English | [中文](README.md)
 
-[![CI](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 
 
 <!-- npm badges: enable after the package is published to npm.
