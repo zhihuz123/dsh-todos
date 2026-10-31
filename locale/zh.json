@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "工作区待办",
+    "description": "持久保存的 workspace Plan / Backlog，支持 Overview、Agent 工具和 /todo 命令。"
+  }
+}

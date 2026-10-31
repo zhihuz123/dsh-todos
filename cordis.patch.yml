@@ -1,0 +1,8 @@
+# dsh-plugin-todos: one dual-face row. The host half is lib/index.js (storage
+# domain, Connection routes, Agent tools, /todo commands), the browser half is
+# lib/client.js, discovered through package.json's dsh.client declaration.
+# The row name MUST equal the package name: client-modules resolves
+# require.resolve('<row-name>/package.json') to locate the browser bundle.
+- insert:
+    - id: dsh-plugin-todos
+      name: 'dsh-plugin-todos'
