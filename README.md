@@ -19,7 +19,7 @@
 [![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 -->
 
-![dsh-todos 待办面板（Desktop 截图，示例数据）](https://cdn.jsdelivr.net/npm/dsh-plugin-todos/docs/preview.zh.png)
+![dsh-todos 待办面板（Desktop 截图，示例数据）](docs/preview.zh.png)
 
 ---
 
