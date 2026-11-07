@@ -15,9 +15,7 @@ English | [中文](README.md)
 [![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 [![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 
-<!-- CI badge: enable once this repository is public (Actions badges 404 on a private repo).
 [![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
--->
 
 ![dsh-todos board in Desktop (screenshot, sample data)](docs/preview.en.png)
 
