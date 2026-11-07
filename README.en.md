@@ -19,7 +19,7 @@ English | [中文](README.md)
 [![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 -->
 
-![dsh-todos board in Desktop (screenshot, sample data)](https://cdn.jsdelivr.net/npm/dsh-plugin-todos/docs/preview.en.png)
+![dsh-todos board in Desktop (screenshot, sample data)](docs/preview.en.png)
 
 ---
 
