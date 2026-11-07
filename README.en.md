@@ -250,7 +250,8 @@ No cookie → 401; wrong Origin → 403. Both come from Connection, not this plu
 
 ## Roadmap
 
-- [ ] DSH Desktop compatibility smoke test and install notes
+- [x] Desktop install notes and npm publishing (`dsh-plugin-todos@0.2.0`)
+- [ ] Full Desktop interaction smoke test: mutate, restore, clear, and `/todo` commands
 - [ ] SSE `/api/todos/events` with snapshot + revision and polling fallback
 - [ ] Drag-and-drop ordering
 - [ ] `expectedUpdatedAt` CAS

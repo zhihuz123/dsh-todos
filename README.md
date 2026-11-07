@@ -250,7 +250,8 @@ interface Todo {
 
 ## Roadmap
 
-- [ ] DSH Desktop 兼容性 smoke test 与安装说明
+- [x] Desktop 安装说明与 npm 发布（`dsh-plugin-todos@0.2.0`）
+- [ ] Desktop 完整交互 smoke test：增删改、恢复、清理与 `/todo` 命令
 - [ ] SSE `/api/todos/events`，带 snapshot + revision 和轮询 fallback
 - [ ] 拖拽排序
 - [ ] `expectedUpdatedAt` CAS
