@@ -6,20 +6,20 @@ Keep *how this turn is executed* in the session. Keep *what to do next* in the w
 
 `dsh-todos` solves the cross-session todo problem: follow-ups discovered by an Agent during a conversation, next steps you have explicitly committed to, and ideas you are not acting on yet can all live in a workspace's Plan / Backlog — still there tomorrow, in the next session, and after a Host restart.
 
-> Early-stage project. The repository is currently private and the package is not published to npm.  
+> Early-stage project (`0.2.0`), verified on Desktop `0.2.2-rc.1` / macOS.  
 > Repository: `dsh-todos`; install package: `dsh-plugin-todos` (`dsh-todos` is already taken on npm).
 
 English | [中文](README.md)
 
 
-<!-- Badges: enable once this repository is public (Actions badges 404 on a
-private repo) and the package is published to npm.
-[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 [![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+
+<!-- CI badge: enable once this repository is public (Actions badges 404 on a private repo).
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 -->
 
-![dsh-todos board in Desktop (screenshot, sample data)](docs/preview.en.png)
+![dsh-todos board in Desktop (screenshot, sample data)](https://cdn.jsdelivr.net/npm/dsh-plugin-todos/docs/preview.en.png)
 
 ---
 
@@ -51,7 +51,30 @@ The three layers are **deliberately not synchronized**. Two sources of truth cha
 
 ## Install
 
+Requires DSH `>= 0.2.1-rc.1 < 0.3.0` (`engines.dsh`); verified on Desktop `0.2.2-rc.1` (macOS).
+
 ### Web profile
+
+```bash
+dsh plugin --profile web add dsh-plugin-todos
+```
+
+Refresh DSH Web and the **Todos** panel appears in the sidebar. You can enable/disable it later under **Settings → Plugins**.
+
+### Desktop
+
+**Option A (recommended, Desktop stays open)**: sidebar **Plugins → Add plugin**, enter `dsh-plugin-todos`. The Host reads the manifest first, confirms it is a bundle, installs it, and enables it; refresh the page.
+
+**Option B (fully quit Desktop first)**:
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
+  plugin --profile desktop add dsh-plugin-todos
+```
+
+The desktop profile is owned by Electron; use Desktop's bundled CLI (with `manageDesktopProfile` and its own pnpm), not a global npm `dsh`. The install records the dependency in `~/.dsh/profiles/desktop/package.json` and selects the bundle in `dsh.profile.bundles`; reopen Desktop to load it.
+
+### From source (development)
 
 ```bash
 git clone git@github.com:zhihuz123/dsh-todos.git
@@ -61,40 +84,9 @@ npm run build
 dsh plugin --profile web add "file:$PWD"
 ```
 
-Refresh DSH Web and the **Todos** panel appears in the sidebar. You can enable/disable it later under **Settings → Plugins**.
+A `file:` dependency is hard-linked: `npm run build` rewrites `lib/*.js` in place, so the profile copy follows; HMR reloads the host half and a page refresh loads the client half. Desktop accepts the same `file:` spec for a local checkout.
 
-Once published to npm:
-
-```bash
-dsh plugin --profile web add dsh-plugin-todos
-```
-
-### Desktop
-
-Verified on Desktop `0.2.2-rc.1` (macOS) with both methods below.
-
-**Option A: install from the Plugins page (recommended, Desktop stays open)**
-
-Sidebar **Plugins → Add plugin**, then enter the checkout's `file:` spec:
-
-```text
-file:/path/to/dsh-todos
-```
-
-The Host reads the manifest first, confirms it is a bundle, installs it, and enables it. Refresh the page and **Todos** appears in the sidebar. If that field rejects a local spec, use Option B.
-
-**Option B: Desktop's bundled CLI (fully quit Desktop first)**
-
-```bash
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add "file:$PWD"
-```
-
-Desktop's bundled CLI runs with `manageDesktopProfile`, so it may manage the desktop profile; do not use a global npm `dsh`. The install records the dependency in `~/.dsh/profiles/desktop/package.json` and selects the bundle in `dsh.profile.bundles`; reopen Desktop to load it.
-
-A `file:` dependency is hard-linked: `npm run build` in the checkout rewrites `lib/*.js` in place, so the profile copy follows. HMR reloads the host half; refresh the page for the client half.
-
-Compatibility: the package's `engines.dsh` covers Desktop's runtime, so no version exemption is needed; `peerDependencies` are development-only and at most print an install warning. Only installation, bundle selection, and host-row activation were verified on Desktop; UI interactions have not been smoke-tested item by item.
+Compatibility: `engines.dsh` decides whether an install is allowed, so no version exemption is needed; `peerDependencies` are declarative and pnpm may print missing-peer warnings — those packages are provided by the DSH runtime, not a failure. On Desktop, installation, bundle selection, panel rendering, and the composer were verified; the full mutate flow and `/todo` commands have not been smoke-tested item by item.
 
 ### Development
 
@@ -106,7 +98,7 @@ npm test
 
 - Host changes: toggle the plugin off/on in Settings, or restart `dsh web`;
 - Client changes: `client-hmr` pushes a new bundle; refresh the page;
-- Desktop has no client-hmr; restart the app.
+- On Desktop, refresh the page after client changes; restart the app if that does not pick them up.
 
 ## Usage
 
@@ -255,8 +247,8 @@ No cookie → 401; wrong Origin → 403. Both come from Connection, not this plu
 - Single-user / single-Host semantics; concurrent edits use last-writer-wins, with no CAS.
 - After a workspace is deleted, stored todos are kept and shown as "Removed workspace"; they are not moved to Inbox.
 - No drag-and-drop ordering and no title-editing UI (`todo_update` supports it).
-- Desktop verification covers installation, bundle selection, and host-row activation only; UI interactions have not been smoke-tested item by item.
-- Targets DSH `0.2.1-rc.x` APIs: verify `connection.fetch`, `storageDomain`, `workspaceRegistry`, `tools`, and `commands` before upgrading DSH.
+- Desktop verification covers installation, bundle selection, panel rendering, and the composer; the full mutate flow and `/todo` commands have not been smoke-tested item by item.
+- Targets the DSH `0.2.1-rc.x` API surface and is verified on `0.2.2-rc.1`; re-verify `connection.fetch`, `storageDomain`, `workspaceRegistry`, `tools`, and `commands` before upgrading DSH.
 
 ## Roadmap
 

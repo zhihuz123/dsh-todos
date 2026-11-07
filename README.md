@@ -9,17 +9,17 @@
 
 `dsh-todos` 解决的是跨会话的待办问题：Agent 在会话里发现的后续工作、你明确承诺的下一步、暂时不做的想法，都可以落到 workspace 的 Plan / Backlog 里，第二天、下一个会话、甚至重启 Host 之后仍然在。
 
-> 早期版本，仓库暂时 private，尚未发布 npm。  
+> 早期版本（`0.2.0`），已在 Desktop `0.2.2-rc.1` / macOS 上验证。  
 > 仓库名是 `dsh-todos`，安装用的包名是 `dsh-plugin-todos`（npm 上的 `dsh-todos` 已被占用）。
 
-<!-- Badges: enable once this repository is public (Actions badges 404 on a
-private repo) and the package is published to npm.
-[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 [![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+
+<!-- CI badge: enable once this repository is public (Actions badges 404 on a private repo).
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 -->
 
-![dsh-todos 待办面板（Desktop 截图，示例数据）](docs/preview.zh.png)
+![dsh-todos 待办面板（Desktop 截图，示例数据）](https://cdn.jsdelivr.net/npm/dsh-plugin-todos/docs/preview.zh.png)
 
 ---
 
@@ -51,7 +51,30 @@ Workspace Backlog    值得以后做什么（持久，暂未承诺）
 
 ## 安装
 
+要求 DSH `>= 0.2.1-rc.1 < 0.3.0`（`engines.dsh`）；已在 Desktop `0.2.2-rc.1`（macOS）上验证。
+
 ### Web profile
+
+```bash
+dsh plugin --profile web add dsh-plugin-todos
+```
+
+刷新 DSH Web，侧边栏会出现「待办」；之后可在 **设置 → 插件** 里启停。
+
+### Desktop
+
+**方式 A（推荐，无需退出 Desktop）**：侧边栏 **插件 → Add plugin**，输入 `dsh-plugin-todos`。Host 先读取包清单确认是 bundle，再安装并自动启用，刷新页面即可。
+
+**方式 B（完全退出 Desktop 后）**：
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
+  plugin --profile desktop add dsh-plugin-todos
+```
+
+desktop profile 由 Electron 管理，必须用 Desktop 自带的 CLI（带 `manageDesktopProfile` 和内置 pnpm），不要用外部 npm 全局的 `dsh`。安装会写入 `~/.dsh/profiles/desktop/package.json` 的 `dependencies` 和 `dsh.profile.bundles`，重新打开 Desktop 后生效。
+
+### 从源码安装（开发）
 
 ```bash
 git clone git@github.com:zhihuz123/dsh-todos.git
@@ -61,40 +84,9 @@ npm run build
 dsh plugin --profile web add "file:$PWD"
 ```
 
-然后在 DSH Web 中刷新页面；侧边栏会出现「待办」。之后可在 **设置 → 插件** 里启停。
+`file:` 依赖是硬链接：在 checkout 里 `npm run build` 会原地重写 `lib/*.js`，profile 中的副本随之更新；Host 半边由 HMR 重载，客户端半边刷新页面即可。Desktop 也可以用同样的 `file:` spec 装本地目录。
 
-发布到 npm 后，安装方式会变成：
-
-```bash
-dsh plugin --profile web add dsh-plugin-todos
-```
-
-### Desktop
-
-已在 Desktop `0.2.2-rc.1`（macOS）上验证下面两种方式。
-
-**方式 A：插件页安装（推荐，无需退出 Desktop）**
-
-侧边栏 **插件 → Add plugin**，输入本地目录的 `file:` spec：
-
-```text
-file:/path/to/dsh-todos
-```
-
-Host 先读取包清单确认是 bundle，再安装并自动启用。完成后刷新页面，侧边栏出现「待办」。若该输入框不接受本地 spec，改用方式 B。
-
-**方式 B：Desktop 自带 CLI（需完全退出 Desktop）**
-
-```bash
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add "file:$PWD"
-```
-
-Desktop 自带的 CLI 带 `manageDesktopProfile`，允许管理 desktop profile；不要用外部 npm 全局的 `dsh`。安装会写入 `~/.dsh/profiles/desktop/package.json` 的 `dependencies` 和 `dsh.profile.bundles`，重新打开 Desktop 后生效。
-
-`file:` 依赖是硬链接：在 checkout 里 `npm run build` 会原地重写 `lib/*.js`，profile 中的副本随之更新；Host 半边由 HMR 重载，客户端半边刷新页面即可。
-
-兼容性：包里的 `engines.dsh` 覆盖 Desktop 的运行时版本，安装时不需要版本豁免；`peerDependencies` 只在开发时使用，安装时最多打印 peer 警告。目前只验证了安装、bundle 启用和 Host 行 active，Desktop 的 UI 交互尚未逐项 smoke test。
+兼容性：`engines.dsh` 决定安装许可，不需要版本豁免；`peerDependencies` 是声明性的，安装时 pnpm 可能打印 missing peer 警告——那些包由 DSH 运行时提供，不是故障。Desktop 上已验证安装、bundle 启用、面板渲染和 composer，完整的增删改流程与 `/todo` 命令尚未逐项 smoke test。
 
 ### 开发模式
 
@@ -106,7 +98,7 @@ npm test
 
 - Host 改动：在设置里关/开插件，或重启 `dsh web`；
 - Client 改动：`client-hmr` 会推新 bundle，刷新页面即可；
-- Desktop 没有 client-hmr，需要重启应用。
+- Desktop 上改完客户端代码后刷新页面，仍不生效再重启应用。
 
 ## 使用
 
@@ -255,8 +247,8 @@ interface Todo {
 - 单用户/单 Host 语义；多窗口同时编辑是「最后写入者胜」，没有 CAS。
 - workspace 被删除后，已存 todo 保留并显示为 “Removed workspace”，不会自动转 Inbox。
 - 没有拖拽排序、没有编辑标题的 UI（`todo_update` 已支持）。
-- Desktop 上只验证了安装、bundle 启用与 Host 侧激活，UI 交互尚未逐项 smoke test。
-- 只针对 DSH `0.2.1-rc.x` 的 API 面实现；升级 DSH 前需验证 `connection.fetch`、`storageDomain`、`workspaceRegistry`、`tools`、`commands`。
+- Desktop 已验证安装、bundle 启用、面板渲染和 composer；完整的增删改流程与 `/todo` 命令尚未逐项 smoke test。
+- 针对 DSH `0.2.1-rc.x` 的 API 面实现，已在 `0.2.2-rc.1` 上验证；升级 DSH 前仍需验证 `connection.fetch`、`storageDomain`、`workspaceRegistry`、`tools`、`commands`。
 
 ## Roadmap
 
