@@ -1,21 +1,19 @@
 # dsh-todos
 
-**DeepSeek Harness 的持久工作区待办面板。**
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 
-把「这次怎么做」留在会话里，把「接下来做什么」留在工作区。
+**DeepSeek Harness 的持久工作区待办面板。**
 
 [English](README.en.md) | 中文
 
+把「这次怎么做」留在会话里，把「接下来做什么」留在工作区。
 
 `dsh-todos` 解决的是跨会话的待办问题：Agent 在会话里发现的后续工作、你明确承诺的下一步、暂时不做的想法，都可以落到 workspace 的 Plan / Backlog 里，第二天、下一个会话、甚至重启 Host 之后仍然在。
 
 > 早期版本（`0.2.0`），已在 Desktop `0.2.2-rc.1` / macOS 上验证。  
 > 仓库名是 `dsh-todos`，安装用的包名是 `dsh-plugin-todos`（npm 上的 `dsh-todos` 已被占用）。
-
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
-
-[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 
 ![dsh-todos 待办面板（Desktop 截图，示例数据）](docs/preview.zh.png)
 

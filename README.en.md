@@ -1,6 +1,12 @@
 # dsh-todos
 
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
+[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
+
 **Durable workspace todos for DeepSeek Harness.**
+
+English | [中文](README.md)
 
 Keep *how this turn is executed* in the session. Keep *what to do next* in the workspace.
 
@@ -8,14 +14,6 @@ Keep *how this turn is executed* in the session. Keep *what to do next* in the w
 
 > Early-stage project (`0.2.0`), verified on Desktop `0.2.2-rc.1` / macOS.  
 > Repository: `dsh-todos`; install package: `dsh-plugin-todos` (`dsh-todos` is already taken on npm).
-
-English | [中文](README.md)
-
-
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
-
-[![tests](https://img.shields.io/github/actions/workflow/status/zhihuz123/dsh-todos/ci.yml?branch=main&label=tests)](https://github.com/zhihuz123/dsh-todos/actions/workflows/ci.yml)
 
 ![dsh-todos board in Desktop (screenshot, sample data)](docs/preview.en.png)
 
