@@ -19,7 +19,7 @@ private repo) and the package is published to npm.
 [![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 -->
 
-![dsh-todos 界面预览（示例数据）](docs/preview.zh.svg)
+![dsh-todos 待办面板（Desktop 截图，示例数据）](docs/preview.zh.png)
 
 ---
 
@@ -71,9 +71,30 @@ dsh plugin --profile web add dsh-plugin-todos
 
 ### Desktop
 
-`desktop` profile 由 Electron 独占，**不能用 npm CLI 的 `dsh plugin --profile desktop` 安装**。请使用 Desktop 自带的插件管理/命令运行时，从本地目录或发布包安装，然后重启 Desktop。
+已在 Desktop `0.2.2-rc.1`（macOS）上验证下面两种方式。
 
-Desktop 兼容性目前还未做完整 smoke test；相关验证已记入 roadmap。
+**方式 A：插件页安装（推荐，无需退出 Desktop）**
+
+侧边栏 **插件 → Add plugin**，输入本地目录的 `file:` spec：
+
+```text
+file:/path/to/dsh-todos
+```
+
+Host 先读取包清单确认是 bundle，再安装并自动启用。完成后刷新页面，侧边栏出现「待办」。若该输入框不接受本地 spec，改用方式 B。
+
+**方式 B：Desktop 自带 CLI（需完全退出 Desktop）**
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
+  plugin --profile desktop add "file:$PWD"
+```
+
+Desktop 自带的 CLI 带 `manageDesktopProfile`，允许管理 desktop profile；不要用外部 npm 全局的 `dsh`。安装会写入 `~/.dsh/profiles/desktop/package.json` 的 `dependencies` 和 `dsh.profile.bundles`，重新打开 Desktop 后生效。
+
+`file:` 依赖是硬链接：在 checkout 里 `npm run build` 会原地重写 `lib/*.js`，profile 中的副本随之更新；Host 半边由 HMR 重载，客户端半边刷新页面即可。
+
+兼容性：包里的 `engines.dsh` 覆盖 Desktop 的运行时版本，安装时不需要版本豁免；`peerDependencies` 只在开发时使用，安装时最多打印 peer 警告。目前只验证了安装、bundle 启用和 Host 行 active，Desktop 的 UI 交互尚未逐项 smoke test。
 
 ### 开发模式
 
@@ -234,7 +255,7 @@ interface Todo {
 - 单用户/单 Host 语义；多窗口同时编辑是「最后写入者胜」，没有 CAS。
 - workspace 被删除后，已存 todo 保留并显示为 “Removed workspace”，不会自动转 Inbox。
 - 没有拖拽排序、没有编辑标题的 UI（`todo_update` 已支持）。
-- Desktop 尚未做完整 smoke test。
+- Desktop 上只验证了安装、bundle 启用与 Host 侧激活，UI 交互尚未逐项 smoke test。
 - 只针对 DSH `0.2.1-rc.x` 的 API 面实现；升级 DSH 前需验证 `connection.fetch`、`storageDomain`、`workspaceRegistry`、`tools`、`commands`。
 
 ## Roadmap

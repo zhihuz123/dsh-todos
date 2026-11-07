@@ -224,15 +224,24 @@ export const STYLE = `
 .dsh-todos-select {
   max-width: 200px;
   height: 34px;
-  padding: 0 8px;
+  padding: 0 26px 0 10px;
   border: 0.5px solid var(--dsw-alias-border-l3);
   border-radius: 10px;
-  background: var(--dsw-alias-bg-base);
+  background-color: var(--dsw-alias-bg-base);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%238a9099' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px 12px;
   color: var(--dsw-alias-label-secondary);
   font: inherit;
   font-size: 12px;
   line-height: 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
 }
+.dsh-todos-select-scope { width: 200px; }
+.dsh-todos-select-bucket { width: 96px; }
 .dsh-todos-add {
   height: 34px;
   padding: 0 14px;
@@ -325,14 +334,20 @@ export const STYLE = `
 .dsh-todos-source:hover { text-decoration: underline; }
 .dsh-todos-priority-select {
   height: 20px;
-  padding: 0 4px;
+  padding: 0 15px 0 5px;
   border: 0;
   border-radius: 5px;
-  background: var(--dsw-alias-fill-l2);
+  background-color: var(--dsw-alias-fill-l2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%238a9099' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 9px 9px;
   color: var(--dsw-alias-label-tertiary);
   font: inherit;
   font-size: 10px;
   line-height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
 }
 .dsh-todos-priority-select:hover { color: var(--dsw-alias-label-primary); }
@@ -405,7 +420,7 @@ export const STYLE = `
 }
 @media (max-width: 640px) {
   .dsh-todos-input { flex-basis: 100%; }
-  .dsh-todos-select { flex: 1; max-width: none; }
+  .dsh-todos-select { flex: 1; width: auto; max-width: none; }
   .dsh-todos-add { flex: 1; }
 }
 .dsh-todos-page :focus-visible {

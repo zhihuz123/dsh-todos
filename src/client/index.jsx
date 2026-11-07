@@ -348,7 +348,7 @@ export function TodosPage({ workspaceStore, workspaces, sessions, onOpenSession,
               disabled={busy}
             />
             <select
-              className="dsh-todos-select"
+              className="dsh-todos-select dsh-todos-select-scope"
               value={effectiveTarget}
               onChange={(event) => setTarget(event.target.value)}
               aria-label={t('workspaceTodos.target')}
@@ -357,7 +357,7 @@ export function TodosPage({ workspaceStore, workspaces, sessions, onOpenSession,
               {scopeOptions.map((option) => <option key={option.key} value={option.key}>{option.label}</option>)}
             </select>
             <select
-              className="dsh-todos-select"
+              className="dsh-todos-select dsh-todos-select-bucket"
               value={bucket}
               onChange={(event) => setBucket(event.target.value)}
               aria-label={t('workspaceTodos.bucket')}

@@ -19,7 +19,7 @@ private repo) and the package is published to npm.
 [![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-todos.svg)](https://www.npmjs.com/package/dsh-plugin-todos)
 -->
 
-![dsh-todos UI preview (sample data)](docs/preview.en.svg)
+![dsh-todos board in Desktop (screenshot, sample data)](docs/preview.en.png)
 
 ---
 
@@ -71,9 +71,30 @@ dsh plugin --profile web add dsh-plugin-todos
 
 ### Desktop
 
-The `desktop` profile is owned by Electron. **Do not install with `dsh plugin --profile desktop` from the npm CLI.** Use Desktop's built-in plugin manager / command runtime, install from the local directory or a published package, and restart Desktop.
+Verified on Desktop `0.2.2-rc.1` (macOS) with both methods below.
 
-Desktop compatibility has not yet received a full smoke test; it is tracked in the roadmap.
+**Option A: install from the Plugins page (recommended, Desktop stays open)**
+
+Sidebar **Plugins → Add plugin**, then enter the checkout's `file:` spec:
+
+```text
+file:/path/to/dsh-todos
+```
+
+The Host reads the manifest first, confirms it is a bundle, installs it, and enables it. Refresh the page and **Todos** appears in the sidebar. If that field rejects a local spec, use Option B.
+
+**Option B: Desktop's bundled CLI (fully quit Desktop first)**
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
+  plugin --profile desktop add "file:$PWD"
+```
+
+Desktop's bundled CLI runs with `manageDesktopProfile`, so it may manage the desktop profile; do not use a global npm `dsh`. The install records the dependency in `~/.dsh/profiles/desktop/package.json` and selects the bundle in `dsh.profile.bundles`; reopen Desktop to load it.
+
+A `file:` dependency is hard-linked: `npm run build` in the checkout rewrites `lib/*.js` in place, so the profile copy follows. HMR reloads the host half; refresh the page for the client half.
+
+Compatibility: the package's `engines.dsh` covers Desktop's runtime, so no version exemption is needed; `peerDependencies` are development-only and at most print an install warning. Only installation, bundle selection, and host-row activation were verified on Desktop; UI interactions have not been smoke-tested item by item.
 
 ### Development
 
@@ -234,7 +255,7 @@ No cookie → 401; wrong Origin → 403. Both come from Connection, not this plu
 - Single-user / single-Host semantics; concurrent edits use last-writer-wins, with no CAS.
 - After a workspace is deleted, stored todos are kept and shown as "Removed workspace"; they are not moved to Inbox.
 - No drag-and-drop ordering and no title-editing UI (`todo_update` supports it).
-- Desktop has not received a full smoke test.
+- Desktop verification covers installation, bundle selection, and host-row activation only; UI interactions have not been smoke-tested item by item.
 - Targets DSH `0.2.1-rc.x` APIs: verify `connection.fetch`, `storageDomain`, `workspaceRegistry`, `tools`, and `commands` before upgrading DSH.
 
 ## Roadmap
